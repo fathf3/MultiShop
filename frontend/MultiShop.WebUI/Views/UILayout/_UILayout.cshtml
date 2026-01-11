@@ -1,0 +1,40 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+@await Component.InvokeAsync("_HeadUILayoutComponentPartial")
+<body>
+    <!-- Topbar Start -->
+    @await Component.InvokeAsync("_TopBarUILayoutComponentPartial")
+    
+    <!-- Topbar End -->
+    <!-- Navbar Start -->
+    @await Component.InvokeAsync("_NavbarUILayoutComponentPartial")
+    <!-- Navbar End -->
+    <!-- Breadcrumb Start -->
+ 
+    <div class="container-fluid">
+        <div class="row px-xl-5">
+            <div class="col-12">
+                <nav class="breadcrumb bg-light mb-30">
+                    <a class="breadcrumb-item text-dark" href="#">Home</a>
+                    <span class="breadcrumb-item active">Contact</span>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- Breadcrumb End -->
+    @RenderBody()
+
+   @await Component.InvokeAsync("_FooterUILayoutComponentPartial")
+    
+   
+</body>
+
+</html>
