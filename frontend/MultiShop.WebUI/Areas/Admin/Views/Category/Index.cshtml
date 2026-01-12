@@ -1,0 +1,151 @@
+﻿@model List<MultiShop.DtoLayer.Dtos.CategoryDtos.ResultCategoryDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createModal">
+                Yeni Kategori
+            </button>
+            <br>
+            <div class="table-responsive pt-3">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                Id
+                            </th>
+                            <th>
+                                Categori Adı
+                            </th>
+                            <th>
+                                Ürünler
+                            </th>
+                            <th>
+                                Sil
+                            </th>
+                             <th>
+                                Güncelle
+                            </th>
+                           
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var category in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @category.Id
+                                </td>
+                                <td>
+                                    @category.CategoryName
+                                </td>
+                                <td>
+                                    <a href="#" class="btn btn-warning">Ürün Listesi</a>
+                                </td>
+                                  <td>
+                                    <a href="/Admin/Category/DeleteCategory/@category.Id" class="btn btn-danger">Sil</a>
+                                </td>
+                                 <td>
+                                    <a href="/Admin/Category/UpdateCategory/@category.Id" class="btn btn-info">Güncelle</a>
+                                </td>
+                              
+                            </tr>
+                        }
+                       
+
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+<!-- MODAL -->
+<div class="modal fade" id="createModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Yeni Kategori</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <input type="text" id="categoryName" class="form-control" placeholder="Kategori adı" />
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                <button class="btn btn-success" onclick="createCategory()">Kaydet</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- MODAL -->
+<div class="modal fade" id="createModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Yeni Kategori</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <input type="text" id="categoryName" class="form-control" placeholder="Kategori adı" />
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                <button class="btn btn-success" onclick="createCategory()">Kaydet</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function createCategory() {
+
+        let categoryName = document.getElementById("categoryName").value;
+       
+        fetch('/Admin/Category/CreateCategory', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                categoryName: categoryName
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                alert("Hata oluştu");
+                return;
+            }
+            location.reload();
+            // Modal kapat
+            var modal = bootstrap.Modal.getInstance(
+                document.getElementById('createModal'));
+            modal.hide();
+
+            // Listeye ekle
+            let table = document.getElementById("categoryTable");
+            table.innerHTML += `
+                <tr>
+                    <td>-</td>
+                    <td>${categoryName}</td>
+                </tr>`;
+
+            document.getElementById("categoryName").value = "";
+        });
+    }
+</script>

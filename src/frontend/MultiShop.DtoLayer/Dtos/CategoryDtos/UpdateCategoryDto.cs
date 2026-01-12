@@ -1,8 +1,9 @@
-﻿namespace MultiShop.Catalog.Dtos.CategoryDtos
+﻿namespace MultiShop.DtoLayer.Dtos.CategoryDtos
 {
-    public class ResultCategoryDto
+    public class UpdateCategoryDto
     {
         public string Id { get; set; }
         public string CategoryName { get; set; }
     }
+   
 }
