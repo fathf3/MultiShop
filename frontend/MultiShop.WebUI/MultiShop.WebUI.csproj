@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="ViewComponents\ProductListViewComponents\_ProductListSizeFilterComponentPartial.cs" />
     <None Include="wwwroot\spica\.DS_Store" />
     <None Include="wwwroot\spica\css\.DS_Store" />
     <None Include="wwwroot\spica\fonts\.DS_Store" />

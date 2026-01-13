@@ -1,4 +1,4 @@
-﻿@model List<MultiShop.DtoLayer.Dtos.CategoryDtos.ResultCategoryDto>
+﻿@model List<ResultCategoryDto>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
@@ -19,6 +19,9 @@
                             </th>
                             <th>
                                 Categori Adı
+                            </th>
+                            <th>
+                                Resim
                             </th>
                             <th>
                                 Ürünler
@@ -43,6 +46,9 @@
                                     @category.CategoryName
                                 </td>
                                 <td>
+                                    @category.ImageUrl
+                                </td>
+                                <td>
                                     <a href="#" class="btn btn-warning">Ürün Listesi</a>
                                 </td>
                                   <td>
@@ -65,65 +71,54 @@
 </div>
 
 
-<!-- MODAL -->
 <div class="modal fade" id="createModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
-
             <div class="modal-header">
                 <h5 class="modal-title">Yeni Kategori</h5>
                 <button class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
             <div class="modal-body">
-                <input type="text" id="categoryName" class="form-control" placeholder="Kategori adı" />
+                <div class="mb-3">
+                    <label class="form-label">Kategori Adı</label>
+                    <input type="text" id="categoryName" class="form-control" placeholder="Örn: Elektronik" />
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Resim URL</label>
+                    <input type="text" id="imageUrl" class="form-control" placeholder="https://resim-linki.com/gorsel.jpg" />
+                </div>
             </div>
 
             <div class="modal-footer">
                 <button class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
                 <button class="btn btn-success" onclick="createCategory()">Kaydet</button>
             </div>
-
         </div>
     </div>
 </div>
 
 
-<!-- MODAL -->
-<div class="modal fade" id="createModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
 
-            <div class="modal-header">
-                <h5 class="modal-title">Yeni Kategori</h5>
-                <button class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-
-            <div class="modal-body">
-                <input type="text" id="categoryName" class="form-control" placeholder="Kategori adı" />
-            </div>
-
-            <div class="modal-footer">
-                <button class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
-                <button class="btn btn-success" onclick="createCategory()">Kaydet</button>
-            </div>
-
-        </div>
-    </div>
-</div>
 
 <script>
     function createCategory() {
-
         let categoryName = document.getElementById("categoryName").value;
-       
+        let imageUrl = document.getElementById("imageUrl").value;
+
+        if (!categoryName) {
+            alert("Lütfen kategori adını giriniz.");
+            return;
+        }
+
         fetch('/Admin/Category/CreateCategory', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                categoryName: categoryName
+                categoryName: categoryName,
+                imageUrl: imageUrl // Entity'deki property ismiyle aynı olmalı
             })
         })
         .then(response => {
@@ -131,21 +126,11 @@
                 alert("Hata oluştu");
                 return;
             }
+            // Başarılıysa sayfayı yenile
             location.reload();
-            // Modal kapat
-            var modal = bootstrap.Modal.getInstance(
-                document.getElementById('createModal'));
-            modal.hide();
-
-            // Listeye ekle
-            let table = document.getElementById("categoryTable");
-            table.innerHTML += `
-                <tr>
-                    <td>-</td>
-                    <td>${categoryName}</td>
-                </tr>`;
-
-            document.getElementById("categoryName").value = "";
+        })
+        .catch(error => {
+            console.error('Hata:', error);
         });
     }
 </script>
