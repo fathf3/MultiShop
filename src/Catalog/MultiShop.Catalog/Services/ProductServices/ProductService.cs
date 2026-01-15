@@ -5,6 +5,7 @@ using MultiShop.Catalog.Entities;
 using MultiShop.Catalog.Repositories;
 using MultiShop.Catalog.Services.CategoryServices;
 using MultiShop.Catalog.Services.ProductServices;
+using static MongoDB.Driver.WriteConcern;
 
 namespace MultiShop.Catalog.Services.ProductServices
 {
@@ -29,26 +30,26 @@ namespace MultiShop.Catalog.Services.ProductServices
 
         public async Task<List<ResultProductWithCategoryDto>> GetProductsWithCategoryAsync()
         {
-            // 1️⃣ Ürünleri al
+            
             var products = await _collection
                 .Find(FilterDefinition<Product>.Empty)
                 .ToListAsync();
 
-            // 2️⃣ CategoryId’leri çıkar
+            
             var categoryIds = products
                 .Select(x => x.CategoryID)
                 .Distinct()
                 .ToList();
 
-            // 3️⃣ CategoryService üzerinden TÜM kategorileri al
+            
             var categories = await _categoryService.GetAllAsync();
 
-            // 4️⃣ Sadece gerekli kategorileri filtrele
+          
             var filteredCategories = categories
                 .Where(c => categoryIds.Contains(c.Id))
                 .ToDictionary(c => c.Id, c => c.CategoryName);
 
-            // 5️⃣ DTO oluştur
+            
             return products.Select(p => new ResultProductWithCategoryDto
             {
                 Id = p.Id,
@@ -62,6 +63,23 @@ namespace MultiShop.Catalog.Services.ProductServices
                     : "Kategori Yok"
             }).ToList();
             
+        }
+
+        public async Task<List<ResultProductWithCategoryDto>> GetProductsWithCategoryByIdAsync(string categoryId)
+        {
+            var products = await _collection
+                .Find(p => p.CategoryID == categoryId)
+                .ToListAsync();
+
+            var categotry = await _categoryService.GetByIdAsync(categoryId);
+            var map = _mapper.Map<Category>(categotry);
+
+            foreach (var item in products)
+            {
+                item.Category = map;
+            }
+
+            return _mapper.Map<List<ResultProductWithCategoryDto>>(products);
         }
     }
 }

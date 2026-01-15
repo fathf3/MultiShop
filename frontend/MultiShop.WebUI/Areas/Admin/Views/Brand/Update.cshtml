@@ -1,0 +1,33 @@
+﻿@model UpdateBrandDto
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Marka Güncelle</h4>
+              
+                <form class="forms-sample" method="post">
+                    <input type="hidden" asp-for="Id">
+                    <div class="form-group">
+                        <label for="@Model.Name">Marka Adı</label>
+                        <input type="text" class="form-control" asp-for="Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="@Model.ImageUrl">Marka Resmi</label>
+                        <input type="text" class="form-control" asp-for="ImageUrl">
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">Güncelle</button>
+                    <button type="button" class="btn btn-secondary" onclick="history.back()">
+                        İptal
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

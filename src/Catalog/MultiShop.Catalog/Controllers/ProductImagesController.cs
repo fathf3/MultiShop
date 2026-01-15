@@ -36,6 +36,18 @@ namespace MultiShop.Catalog.Controllers
             return Ok(productImage);
         }
 
+        [HttpGet("GetImageByProductId/{id}")]
+        public async Task<IActionResult> GetImageByProductIdAsync(string id)
+        {
+            var productImage = await _productImageService.GetImageByProductIdAsync(id);
+
+            if (productImage == null)
+                return NotFound();
+
+            return Ok(productImage);
+        }
+
+
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateProductImageDto dto)
@@ -65,5 +77,8 @@ namespace MultiShop.Catalog.Controllers
             await _productImageService.DeleteAsync(id);
             return Ok($"{id} Başarıyla silindi");
         }
+
+
+
     }
 }

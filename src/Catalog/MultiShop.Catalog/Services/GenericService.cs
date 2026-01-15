@@ -56,6 +56,7 @@ namespace MultiShop.Catalog.Services
             await _collection.ReplaceOneAsync(
                 x => x.Id == entity.Id,
                 entity);
+            
         }
 
         public virtual async Task DeleteAsync(string id)

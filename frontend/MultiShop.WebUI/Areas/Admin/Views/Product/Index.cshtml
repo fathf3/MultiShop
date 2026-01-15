@@ -24,17 +24,18 @@
                             <th>
                                 Fiyat
                             </th>
-                            <th>
-                                Açıklama
-                            </th>
-                            <th>
-                                Sayfa
-                            </th>
+                         
                             <th>
                                 Sil
                             </th>
                             <th>
                                 Güncelle
+                            </th>
+                            <th>
+                                Ürün Görselleri
+                            </th>
+                            <th>
+                                Ürün Açıklamaları
                             </th>
 
                         </tr>
@@ -52,18 +53,18 @@
                                 <td>
                                     @Product.ProductPrice
                                 </td>
-                                <td>
-                                    @Product.ProductDescription
-                                </td>
-                                
-                                <td>
-                                    <a href="#" class="btn btn-warning">Ürün Listesi</a>
-                                </td>
+                                                             
                                 <td>
                                     <a href="/Admin/Product/DeleteProduct/@Product.Id" class="btn btn-danger">Sil</a>
                                 </td>
                                 <td>
                                     <a href="/Admin/Product/UpdateProduct/@Product.Id" class="btn btn-info">Güncelle</a>
+                                </td>
+                                <td>
+                                    <a href="/Admin/ProductDetail/UpdateProductDetail/@Product.Id" class="btn btn-warning">Ürün Görselleri</a>
+                                </td>
+                                <td>
+                                    <a href="/Admin/ProductDetail/UpdateProductDetail/@Product.Id" class="btn btn-warning">Ürün Açıklamaları</a>
                                 </td>
 
                             </tr>

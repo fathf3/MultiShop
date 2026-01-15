@@ -34,17 +34,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("CreateProduct")]
         public async Task<IActionResult> CreateProduct()
         {
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:7070/api/categories/");
-            var jsonData = await responseMessage.Content.ReadAsStringAsync();
-            var values = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(jsonData);
-            List<SelectListItem> categoryValues = (from c in values
-                                                   select new SelectListItem
-                                                   {
-                                                       Text = c.CategoryName,
-                                                       Value = c.Id
-                                                   }).ToList();
-            ViewBag.CategoryValues = categoryValues;
+            await LoadCategoriesAsync();
 
             return View();
         }
@@ -66,15 +56,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
 
             return RedirectToAction("Index", "Product", new { area = "Admin" });
         }
-        [Route("DeleteProduct/{id}")]
-        public async Task<IActionResult> Delete(string id)
-        {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.DeleteAsync($"https://localhost:7070/api/products/{id}");
-            if (!response.IsSuccessStatusCode)
-                return BadRequest();
-            return RedirectToAction("Index", "Product", new { area = "Admin" });
-        }
+       
         [Route("UpdateProduct/{id}")]
         [HttpGet]
         public async Task<IActionResult> Update(string id)
@@ -100,7 +82,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(dto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var response = await client.PutAsync("https://localhost:7070/api/products", stringContent);
+            var response = await client.PutAsync($"https://localhost:7070/api/products/{dto.Id}", stringContent);
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Product", new { area = "Admin" });
@@ -108,19 +90,16 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
 
             return View(dto);
         }
-        private async Task LoadCategoriesAsync()
+        [Route("DeleteProduct/{id}")]
+        public async Task<IActionResult> Delete(string id)
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7070/api/categories/");
-            var jsonData = await response.Content.ReadAsStringAsync();
-            var values = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(jsonData);
-
-            ViewBag.Categories = values.Select(c => new SelectListItem
-            {
-                Text = c.CategoryName,
-                Value = c.Id
-            }).ToList();
+            var response = await client.DeleteAsync($"https://localhost:7070/api/products/{id}");
+            if (!response.IsSuccessStatusCode)
+                return BadRequest();
+            return RedirectToAction("Index", "Product", new { area = "Admin" });
         }
+        
         [Route("ProductListWithCategory")]
         public async Task<IActionResult> ProductListWithCategory()
         {
@@ -135,6 +114,23 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
 
             return View();
         }
+
+
+
+        private async Task LoadCategoriesAsync()
+        {
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.GetAsync("https://localhost:7070/api/categories/");
+            var jsonData = await response.Content.ReadAsStringAsync();
+            var values = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(jsonData);
+
+            ViewBag.Categories = values.Select(c => new SelectListItem
+            {
+                Text = c.CategoryName,
+                Value = c.Id
+            }).ToList();
+        }
+
 
     }
 }

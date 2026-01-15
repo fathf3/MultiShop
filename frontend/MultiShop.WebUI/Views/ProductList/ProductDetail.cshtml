@@ -4,13 +4,15 @@
     Layout = "~/Views/UILayout/_UILayout.cshtml";
 }
 
+
+
 <!-- Shop Detail Start -->
 <div class="container-fluid pb-5">
     <div class="row px-xl-5">
         
-        @await Component.InvokeAsync("_ProductDetailImagesSliderComponentPartial")
+        @await Component.InvokeAsync("_ProductDetailImagesSliderComponentPartial", new { id = ViewBag.ProductId })
 
-        @await Component.InvokeAsync("_ProductDetailComponentPartial")
+        @await Component.InvokeAsync("_ProductDetailComponentPartial", new {id = ViewBag.ProductId})
     </div>
     <div class="row px-xl-5">
         <div class="col">

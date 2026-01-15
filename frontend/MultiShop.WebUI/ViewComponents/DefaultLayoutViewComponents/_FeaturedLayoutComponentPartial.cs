@@ -7,9 +7,7 @@ namespace MultiShop.WebUI.ViewComponents.DefaultLayoutViewComponents
 {
     public class _FeaturedLayoutComponentPartial : ViewComponent
     {
-       
 
-    
 
         public async Task<IViewComponentResult> InvokeAsync()
         {

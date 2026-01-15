@@ -48,7 +48,7 @@
                     </div>
                 </div>
 
-                @await Component.InvokeAsync("_ProductListComponentView")
+                @await Component.InvokeAsync("_ProductListComponentView", new { id = ViewBag.CategoryId })
                 <!-- Pagination -->
                 <div class="col-12">
                     <nav>

@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using MultiShop.Catalog.Repositories;
+using MultiShop.Catalog.Services.AboutServices;
+using MultiShop.Catalog.Services.BrandServices;
 using MultiShop.Catalog.Services.CategoryServices;
 using MultiShop.Catalog.Services.FeatureSliderServices;
 using MultiShop.Catalog.Services.ProductDetailServices;
@@ -47,6 +49,8 @@ builder.Services.AddScoped<IProductDetailService, ProductDetailService>();
 builder.Services.AddScoped<IProductImageService, ProductImageService>();
 builder.Services.AddScoped<IFeatureSliderService, FeatureSliderService>();
 builder.Services.AddScoped<ISpecialOfferService, SpecialOfferService>();
+builder.Services.AddScoped<IBrandService, BrandService>();
+builder.Services.AddScoped<IAboutService, AboutService>();
 
 
 // AutoMapper configuration
