@@ -1,0 +1,108 @@
+﻿
+@model CreateLoginDto
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>MultiShop - Login</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="~/MultiShop/css/style.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #F5F5F5;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .login-card {
+            background: #fff;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 6px;
+        }
+
+        .btn-primary {
+            color: #3D464D;
+            background-color: #FFD333;
+            border-color: #FFD333;
+            font-weight: 700;
+        }
+
+            .btn-primary:hover {
+                background-color: #f7c300;
+            }
+
+        .form-control:focus {
+            border-color: #FFD333;
+            box-shadow: 0 0 0 0.2rem rgba(255, 211, 51, 0.25);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <!-- Logo -->
+        <div class="text-center mb-4">
+            <a href="/" class="text-decoration-none">
+                <span class="h1 text-uppercase text-primary bg-dark px-2">Multi</span>
+                <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Shop</span>
+            </a>
+        </div>
+
+        <!-- Login Card -->
+        <div class="login-card p-4">
+            <h4 class="text-center mb-4">Giriş Yap</h4>
+
+            <form method="post">
+                <div class="form-group mb-3">
+                    <label>Kullanıcı Adı veya Email</label>
+                    <input type="text" class="form-control" asp-for="Username"
+                           placeholder="kullanici adi veya email" required>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label>Şifre</label>
+                    <input type="password" class="form-control" asp-for="Password"
+                           placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block w-100">
+                    Giriş Yap
+                </button>
+            </form>
+
+            <!-- Register Link -->
+            <div class="text-center mt-4">
+                <p class="mb-1">Hesabın yok mu?</p>
+                <a asp-controller="Register" asp-action="Index"
+                   class="text-primary font-weight-bold">
+                    Kayıt Ol
+                </a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
