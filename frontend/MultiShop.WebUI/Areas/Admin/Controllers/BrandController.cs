@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.DtoLayer.Dtos.BrandDtos;
+using MultiShop.WebUI.Services.CatalogServices.BrandServices;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -9,24 +10,19 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
     [Route("Admin/Brand")]
     public class BrandController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-        public BrandController(IHttpClientFactory httpClientFactory)
+        private readonly IBrandService _BrandService;
+
+        public BrandController(IBrandService BrandService)
         {
-            _httpClientFactory = httpClientFactory;
+
+            _BrandService = BrandService;
         }
         [Route("Index")]
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7070/api/Brands");
-            if (response.IsSuccessStatusCode)
-            {
-                var sliders = await response.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<ResultBrandDto>>(sliders);
-                return View(values);
-            }
+            var values = await _BrandService.GetAllAsync();
 
-            return View();
+            return View(values);
         }
 
         [Route("Create")]
@@ -40,57 +36,28 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Create")]
         public async Task<IActionResult> Create(CreateBrandDto dto)
         {
-            var client = _httpClientFactory.CreateClient();
-            var jsonData = JsonConvert.SerializeObject(dto);
-            StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-            var response = await client.PostAsync(
-                "https://localhost:7070/api/Brands",
-                content);
-
-
-            if (!response.IsSuccessStatusCode)
-                return BadRequest();
-
+            await _BrandService.CreateAsync(dto);
             return RedirectToAction("Index", "Brand", new { area = "Admin" });
         }
         [Route("Delete/{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.DeleteAsync($"https://localhost:7070/api/Brands/{id}");
-            if (!response.IsSuccessStatusCode)
-                return BadRequest();
+            await _BrandService.DeleteAsync(id);
             return RedirectToAction("Index", "Brand", new { area = "Admin" });
         }
         [Route("Update/{id}")]
         [HttpGet]
         public async Task<IActionResult> Update(string id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7070/api/Brands/{id}");
-            if (response.IsSuccessStatusCode)
-            {
-                var Brand = await response.Content.ReadAsStringAsync();
-                var dto = JsonConvert.DeserializeObject<UpdateBrandDto>(Brand);
-                return View(dto);
-            }
+            var values = await _BrandService.GetByIdAsync(id);
             return View();
         }
         [Route("Update/{id}")]
         [HttpPost]
         public async Task<IActionResult> Update(UpdateBrandDto dto)
         {
-            var client = _httpClientFactory.CreateClient();
-            var jsonData = JsonConvert.SerializeObject(dto);
-            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var response = await client.PutAsync($"https://localhost:7070/api/Brands/{dto.Id}", stringContent);
-            if (response.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index", "Brand", new { area = "Admin" });
-            }
-
-            return View(dto);
+            await _BrandService.UpdateAsync(dto);
+            return RedirectToAction("Index", "Brand", new { area = "Admin" });
         }
     }
 }

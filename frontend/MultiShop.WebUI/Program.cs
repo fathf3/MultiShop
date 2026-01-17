@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using MultiShop.WebUI.Handlers;
 using MultiShop.WebUI.Services.Concrete;
 using MultiShop.WebUI.Services.Interfaces;
 using MultiShop.WebUI.Settings;
@@ -27,7 +28,7 @@ builder
     {
         opt.LoginPath = "/Login/Index";
         opt.Cookie.Name = "MultiShopCookie";
-        opt.SlidingExpiration = true
+        opt.SlidingExpiration = true;
 
     });
 
@@ -36,14 +37,23 @@ builder
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<ILoginService, LoginService>();
-builder.Services.AddHttpClient<IIdentityService, IdentityService>();
+builder.Services.AddScoped<IUserService, UserService>();
+
 
 // Add services to the container.
 builder.Services.AddHttpClient();
 builder.Services.AddControllersWithViews();
 
 builder.Services.Configure<ClientSettings>(builder.Configuration.GetSection("ClientSettings"));
+builder.Services.Configure<ServiceApiSetting>(builder.Configuration.GetSection("ServiceApiSettings"));
 
+builder.Services.AddScoped<ResourceOwnerPassowordTokenHandler>();
+var values = builder.Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSetting>();
+builder.Services.AddHttpClient<IUserService, UserService>(opt =>
+{
+    opt.BaseAddress = new Uri(values.IdentityServerUrl);
+
+}).AddHttpMessageHandler<ResourceOwnerPassowordTokenHandler>();
 
 var app = builder.Build();
 

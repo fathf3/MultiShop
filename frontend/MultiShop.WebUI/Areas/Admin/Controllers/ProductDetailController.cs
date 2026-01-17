@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.DtoLayer.Dtos.ProductDetailDtos;
+using MultiShop.WebUI.Services.CatalogServices.ProductDetailServices;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -9,57 +10,54 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
     [Route("Admin/ProductDetail")]
     public class ProductDetailController : Controller
     {
+        private readonly IProductDetailService _ProductDetailService;
 
-        private readonly IHttpClientFactory _httpClientFactory;
-        public ProductDetailController(IHttpClientFactory httpClientFactory)
+        public ProductDetailController(IProductDetailService ProductDetailService)
         {
-            _httpClientFactory = httpClientFactory;
+
+            _ProductDetailService = ProductDetailService;
         }
-        [Route("UpdateProductDetail/{id}")]
-        [HttpGet]
-        public async Task<IActionResult> UpdateProductDetail(string id)
+        [Route("Index")]
+        public async Task<IActionResult> Index()
         {
+            var values = await _ProductDetailService.GetAllAsync();
 
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync($"https://localhost:7070/api/ProductDetails/GetProductDetailByProductId/{id}");
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<UpdateProductDetailDto>(jsonData);
-                return View(values);
-            }
+            return View(values);
+        }
+
+        [Route("Create")]
+        public async Task<IActionResult> Create()
+        {
             return View();
         }
-        [Route("UpdateProductDetail/{id}")]
+
+
         [HttpPost]
-        public async Task<IActionResult> UpdateProductDetail(string detailId,
-    [FromForm] UpdateProductDetailDto dto)
+        [Route("Create")]
+        public async Task<IActionResult> Create(CreateProductDetailDto dto)
         {
-            // Debug için: dto.Id'nin dolu geldiğinden emin olun
-            if (string.IsNullOrEmpty(dto.Id))
-            {
-                ModelState.AddModelError("", "ID bilgisi eksik.");
-                return View(dto);
-            }
-
-            dto.Id = detailId;
-            var client = _httpClientFactory.CreateClient();
-            var jsonData = JsonConvert.SerializeObject(dto);
-            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-
-            var response = await client.PutAsync($"https://localhost:7070/api/ProductDetails/{dto.Id}", content);
-
-            if (response.IsSuccessStatusCode)
-            {
-                return RedirectToAction("ProductListWithCategory", "Product", new { area = "Admin" });
-            }
-
-            // Hata detayını görmek için:
-            var errorContent = await response.Content.ReadAsStringAsync();
-            ModelState.AddModelError("", $"API Hatası: {response.StatusCode} - {errorContent}");
-
-            return View(dto);
+            await _ProductDetailService.CreateAsync(dto);
+            return RedirectToAction("Index", "ProductDetail", new { area = "Admin" });
+        }
+        [Route("Delete/{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            await _ProductDetailService.DeleteAsync(id);
+            return RedirectToAction("Index", "ProductDetail", new { area = "Admin" });
+        }
+        [Route("Update/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> Update(string id)
+        {
+            var values = await _ProductDetailService.GetByIdAsync(id);
+            return View();
+        }
+        [Route("Update/{id}")]
+        [HttpPost]
+        public async Task<IActionResult> Update(UpdateProductDetailDto dto)
+        {
+            await _ProductDetailService.UpdateAsync(dto);
+            return RedirectToAction("Index", "ProductDetail", new { area = "Admin" });
         }
     }
 }
