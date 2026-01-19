@@ -1,30 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.DtoLayer.Dtos.SpecialOfferDtos;
+using MultiShop.WebUI.Services.CatalogServices.SpecialOfferServices;
 using Newtonsoft.Json;
 
 namespace MultiShop.WebUI.ViewComponents.DefaultLayoutViewComponents
 {
     public class _SpecialOfferLayoutComponentPartial : ViewComponent
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ISpecialOfferService _specialOfferService;
 
-        public _SpecialOfferLayoutComponentPartial(IHttpClientFactory httpClientFactory)
+        public _SpecialOfferLayoutComponentPartial(ISpecialOfferService specialOfferService)
         {
-            _httpClientFactory = httpClientFactory;
+            _specialOfferService = specialOfferService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7070/api/SpecialOffers");
-            if (response.IsSuccessStatusCode)
-            {
-                var sliders = await response.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<ResultSpecialOfferDto>>(sliders);
-                return View(values);
-            }
+            var values = await _specialOfferService.GetAllAsync();
 
-            return View();
+            return View(values);
         }
     }
 }

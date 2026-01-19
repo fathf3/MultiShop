@@ -14,5 +14,10 @@ namespace MultiShop.WebUI.Services.CommentServices
             : base(httpClient, "Comments")
         {
         }
+
+        public async Task<List<ResultCommentDto>> CommentListByProductId(int id)
+        {
+            return await _httpClient.GetFromJsonAsync<List<ResultCommentDto>>($"comments/CommentListByProductId/{id}");
+        }
     }
 }

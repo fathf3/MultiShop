@@ -16,7 +16,6 @@
     <None Include="wwwroot\spica\images\auth\.DS_Store" />
     <None Include="wwwroot\spica\images\faces\.DS_Store" />
     <None Include="wwwroot\spica\js\.DS_Store" />
-    <None Include="wwwroot\spica\pages\.DS_Store" />
     <None Include="wwwroot\spica\scss\.DS_Store" />
     <None Include="wwwroot\spica\scss\components\.DS_Store" />
     <None Include="wwwroot\spica\template\.DS_Store" />

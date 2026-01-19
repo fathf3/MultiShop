@@ -10,16 +10,5 @@ namespace MultiShop.WebUI.Services.CatalogServices.BrandServices
         UpdateBrandDto>
     {
     }
-    public class BrandService
-   : GenericService<
-       ResultBrandDto,
-       CreateBrandDto,
-       UpdateBrandDto>,
-     IBrandService
-    {
-        public BrandService(HttpClient httpClient)
-            : base(httpClient, "Brands")
-        {
-        }
-    }
+   
 }

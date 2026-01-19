@@ -3,7 +3,7 @@
 
     // Catalog
     {
-      "DownstreamPathTemplate": "/api/{evereything}",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -11,7 +11,7 @@
           "Port": 7070
         }
       ],
-      "UpstreamPathTemplate": "/src/catalog/{evereything}",
+      "UpstreamPathTemplate": "/src/catalog/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
@@ -21,7 +21,7 @@
     },
     // Discount
     {
-      "DownstreamPathTemplate": "/api/{evereything}",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -29,7 +29,7 @@
           "Port": 7071
         }
       ],
-      "UpstreamPathTemplate": "/src/discount/{evereything}",
+      "UpstreamPathTemplate": "/src/discount/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
@@ -39,7 +39,7 @@
     },
     // Order
     {
-      "DownstreamPathTemplate": "/api/{evereything}",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -47,7 +47,7 @@
           "Port": 7072
         }
       ],
-      "UpstreamPathTemplate": "/src/order/{evereything}",
+      "UpstreamPathTemplate": "/src/order/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
@@ -58,7 +58,7 @@
 
     // Cargo
     {
-      "DownstreamPathTemplate": "/api/{evereything}",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -66,7 +66,7 @@
           "Port": 7073
         }
       ],
-      "UpstreamPathTemplate": "/src/cargo/{evereything}",
+      "UpstreamPathTemplate": "/src/cargo/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
@@ -76,7 +76,7 @@
     },
     //Basket
     {
-      "DownstreamPathTemplate": "/api/{evereything}",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -84,7 +84,7 @@
           "Port": 7074
         }
       ],
-      "UpstreamPathTemplate": "/src/basket/{evereything}",
+      "UpstreamPathTemplate": "/src/basket/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
@@ -94,7 +94,7 @@
     },
     // Comment
     {
-      "DownstreamPathTemplate": "/api/{evereything}",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -102,7 +102,7 @@
           "Port": 7074
         }
       ],
-      "UpstreamPathTemplate": "/src/comment/{evereything}",
+      "UpstreamPathTemplate": "/src/comment/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
@@ -112,7 +112,7 @@
     },
     // Payment
     {
-      "DownstreamPathTemplate": "/api/{evereything}",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -120,7 +120,7 @@
           "Port": 7076
         }
       ],
-      "UpstreamPathTemplate": "/src/payment/{evereything}",
+      "UpstreamPathTemplate": "/src/payment/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
@@ -130,7 +130,7 @@
     },
     // Images
     {
-      "DownstreamPathTemplate": "/api/{evereything}",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -138,7 +138,7 @@
           "Port": 7077
         }
       ],
-      "UpstreamPathTemplate": "/src/images/{evereything}",
+      "UpstreamPathTemplate": "/src/images/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {

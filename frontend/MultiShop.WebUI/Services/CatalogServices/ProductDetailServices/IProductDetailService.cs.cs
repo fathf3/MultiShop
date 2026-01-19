@@ -8,5 +8,6 @@ namespace MultiShop.WebUI.Services.CatalogServices.ProductDetailServices
        CreateProductDetailDto,
        UpdateProductDetailDto>
     {
+        Task<GetByIdProductDetailDto> GetByProductIdProductDetailAsync(string id);
     }
 }

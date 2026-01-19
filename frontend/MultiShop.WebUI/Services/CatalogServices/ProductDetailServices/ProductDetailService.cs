@@ -14,5 +14,12 @@ namespace MultiShop.WebUI.Services.CatalogServices.ProductDetailServices
             : base(httpClient, "ProductDetails")
         {
         }
+
+        public async Task<GetByIdProductDetailDto> GetByProductIdProductDetailAsync(string id)
+        {
+            return await _httpClient
+                .GetFromJsonAsync<GetByIdProductDetailDto>(
+                    $"ProductDetails/GetProductDetailByProductId/{id}");
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace MultiShop.WebUI.Services.CatalogServices.ProductServices
         {
             return await _httpClient
                 .GetFromJsonAsync<List<ResultProductWithCategoryDto>>(
-                    $"Products/GetProductsWithCategoryByCategoryId/{categoryId}");
+                    $"Products/GetProductsWithCategoryById/{categoryId}");
         }
 
     }

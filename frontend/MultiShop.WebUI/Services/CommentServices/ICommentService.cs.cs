@@ -8,5 +8,6 @@ namespace MultiShop.WebUI.Services.CommentServices
        CreateCommentDto,
        UpdateCommentDto>
     {
+        Task<List<ResultCommentDto>> CommentListByProductId(int id);
     }
 }

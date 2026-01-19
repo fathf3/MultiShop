@@ -14,5 +14,13 @@ namespace MultiShop.WebUI.Services.CatalogServices.ProductImageServices
             : base(httpClient, "ProductImages")
         {
         }
+
+        public async Task<GetByIdProductImageDto> GetByIdProductImageAsync(string id)
+        {
+            return await _httpClient
+                 .GetFromJsonAsync<GetByIdProductImageDto>(
+                     $"ProductImages/GetImageByProductId/{id}");
+           
+        }
     }
 }

@@ -1,30 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.DtoLayer.Dtos.ProductDtos;
+using MultiShop.WebUI.Services.CatalogServices.ProductDetailServices;
 using Newtonsoft.Json;
 
 namespace MultiShop.WebUI.ViewComponents.ProductDetailViewComponents
 {
     public class _ProductDetailComponentPartial : ViewComponent
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IProductDetailService _productDetailService;
 
-        public _ProductDetailComponentPartial(IHttpClientFactory httpClientFactory)
+        public _ProductDetailComponentPartial(IProductDetailService productDetailService)
         {
-            _httpClientFactory = httpClientFactory;
+            _productDetailService = productDetailService;
         }
 
         public async  Task<IViewComponentResult> InvokeAsync(string id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7070/api/products/{id}");
-            if (response.IsSuccessStatusCode)
-            {
-                var products = await response.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<ResultProductDto>(products);
-                return View(values);
-            }
 
-            return View();
+            var values = await _productDetailService.GetByProductIdProductDetailAsync(id);
+
+            return View(values);
+
+            
         }
     }
 }
